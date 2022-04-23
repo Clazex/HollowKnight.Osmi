@@ -1,0 +1,111 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<AssemblyTitle>Osmi</AssemblyTitle>
+		<Version>0.1.0</Version>
+		<Description>A Hollow Knight library mod</Description>
+		<Authors>Clazex</Authors>
+
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Copyright>Copyright © 2022 Clazex</Copyright>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageProjectUrl>https://github.com/Clazex/HollowKnight.Osmi#readme</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Clazex/HollowKnight.Osmi</RepositoryUrl>
+
+		<LangVersion>10.0</LangVersion>
+		<TargetFramework>net472</TargetFramework>
+		<PlatformTarget>x64</PlatformTarget>
+		<DebugType>portable</DebugType>
+		<RootNamespace>Osmi</RootNamespace>
+
+		<Optimize>True</Optimize>
+		<Deterministic>True</Deterministic>
+		<CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+		<Nullable>enable</Nullable>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<PathMap>$([System.IO.Path]::GetFullPath('$(SolutionDir)'))=./</PathMap>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<HKRefs Condition="$(HKRefs) == ''">../HKManaged/</HKRefs>
+		<HKModdingApi Condition="$(HKModdingApi) == ''">$(HKRefs)</HKModdingApi>
+		<HKModRefs Condition="$(HKModRefs) == ''">$(HKRefs)/Mods</HKModRefs>
+		<HKModOutputPath Condition="$(HKModOutputPath) == ''">$(HKModRefs)</HKModOutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Resources/**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="Assembly-CSharp">
+			<HintPath>$(HKModdingApi)/Assembly-CSharp.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="UnityEngine">
+			<HintPath>$(HKRefs)/UnityEngine.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="UnityEngine.CoreModule">
+			<HintPath>$(HKRefs)/UnityEngine.CoreModule.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="UnityEngine.ImageConversionModule">
+			<HintPath>$(HKRefs)/UnityEngine.ImageConversionModule.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Mono.Cecil">
+			<HintPath>$(HKModdingApi)/Mono.Cecil.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="MonoMod.RuntimeDetour">
+			<HintPath>$(HKModdingApi)/MonoMod.RuntimeDetour.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="MonoMod.Utils">
+			<HintPath>$(HKModdingApi)/MonoMod.Utils.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="PlayMaker">
+			<HintPath>$(HKRefs)/PlayMaker.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="MMHOOK_Assembly-CSharp">
+			<HintPath>$(HKModdingApi)/MMHOOK_Assembly-CSharp.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="MMHOOK_PlayMaker">
+			<HintPath>$(HKModdingApi)/MMHOOK_PlayMaker.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>$(HKModdingApi)/Newtonsoft.Json.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Nullable" Version="1.3.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<Target Name="CopyMod" AfterTargets="PostBuildEvent">
+		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb" DestinationFolder="$(HKModOutputPath)/$(TargetName)" SkipUnchangedFiles="true" />
+	</Target>
+
+	<Target Name="CreateReleaseZip" AfterTargets="PostBuildEvent" Condition="$(Configuration) == 'Release'">
+		<RemoveDir Directories="$(SolutionDir)/dist" />
+		<MakeDir Directories="$(SolutionDir)/dist/tmp" />
+
+		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb;$(SolutionDir)/README.md;$(SolutionDir)/LICENSE" DestinationFolder="$(SolutionDir)/dist/tmp" />
+		<ZipDirectory SourceDirectory="$(SolutionDir)/dist/tmp" DestinationFile="$(SolutionDir)/dist/$(TargetName)-v$(Version).zip" />
+
+		<RemoveDir Directories="$(SolutionDir)/dist/tmp" />
+
+		<GetFileHash Files="$(SolutionDir)/dist/$(TargetName)-v$(Version).zip" Algorithm="SHA256">
+			<Output TaskParameter="Items" ItemName="FilesWithHashes" />
+		</GetFileHash>
+		<WriteLinesToFile File="$(SolutionDir)/dist/SHA.txt" Lines="@(FilesWithHashes->'%(FileHash)')" Encoding="UTF-8" />
+	</Target>
+</Project>
