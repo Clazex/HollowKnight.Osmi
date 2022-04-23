@@ -1,0 +1,32 @@
+using System.IO;
+
+namespace Osmi.Utils;
+
+[PublicAPI]
+public static class StreamUtil {
+	public static string ReadToString(this Stream self) {
+		StreamReader reader = new(self);
+		string content = reader.ReadToEnd();
+
+		reader.Close();
+		self.Close();
+
+		return content;
+	}
+
+	public static byte[] ReadToBytes(this Stream self) {
+		MemoryStream ms;
+		if (self is MemoryStream s) {
+			ms = s;
+		} else {
+			ms = new((int) self.Length);
+			self.CopyTo(ms);
+			self.Close();
+		}
+
+		byte[] content = ms.ToArray();
+		ms.Close();
+
+		return content;
+	}
+}
