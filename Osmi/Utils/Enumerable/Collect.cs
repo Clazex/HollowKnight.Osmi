@@ -22,4 +22,6 @@ public static partial class EnumerableUtil {
 
 	public static Dictionary<K, V> ToDictionary<K, V>(this IEnumerable<(K key, V value)> self) =>
 		self.ToDictionary(tuple => tuple.key, tuple => tuple.value);
+
+	public static HashSet<T> ToHashSet<T>(this IEnumerable<T> self) => new(self);
 }
