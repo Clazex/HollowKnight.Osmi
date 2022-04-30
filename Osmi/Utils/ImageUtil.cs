@@ -33,7 +33,7 @@ public static class ImageUtil {
 		return newTex;
 	}
 
-	public static Sprite MakeSprite(this Texture2D self, float pixelPerUnit = 100f) =>
+	public static Sprite MakeSprite(this Texture2D self, float pixelPerUnit = 64f) =>
 		Sprite.Create(
 			self,
 			new Rect(0f, 0f, self.width, self.height),
@@ -41,6 +41,6 @@ public static class ImageUtil {
 			pixelPerUnit
 		);
 
-	public static Sprite ReadToSprite(this Stream self, float pixelPerUnit = 100f) =>
+	public static Sprite ReadToSprite(this Stream self, float pixelPerUnit = 64f) =>
 		self.ReadToTexture2D().MakeSprite(pixelPerUnit);
 }
