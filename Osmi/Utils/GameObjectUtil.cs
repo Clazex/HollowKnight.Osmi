@@ -23,4 +23,55 @@ public static class GameObjectUtil {
 			yield return child.gameObject;
 		}
 	}
+
+
+	public static GameObject New(bool dontDestroyOnLoad = false) {
+		GameObject go = new();
+
+		if (dontDestroyOnLoad) {
+			UObject.DontDestroyOnLoad(go);
+		}
+
+		return go;
+	}
+
+	public static GameObject New(string name, bool dontDestroyOnLoad = false) =>
+		New(name, null!, dontDestroyOnLoad);
+
+	public static GameObject New(string name, Transform parent, bool dontDestroyOnLoad = false) {
+		GameObject go = new(name);
+		go.SetParent(parent);
+
+		if (dontDestroyOnLoad) {
+			UObject.DontDestroyOnLoad(go);
+		}
+
+		return go;
+	}
+
+	public static GameObject New(string name, Transform parent, params Type[] components) {
+		GameObject go = new(name, components);
+		go.SetParent(parent);
+		return go;
+	}
+
+	public static GameObject New(string name, Transform parent, bool dontDestroyOnLoad, params Type[] components) {
+		GameObject go = new(name, components);
+		go.SetParent(parent);
+
+		if (dontDestroyOnLoad) {
+			UnityEngine.Object.DontDestroyOnLoad(go);
+		}
+
+		return go;
+	}
+
+
+	public static T Instantiate<T>(T original, Vector3 position)
+		where T : UObject =>
+		UObject.Instantiate(original, position, Quaternion.identity);
+
+	public static T Instantiate<T>(T original, Vector3 position, Transform parent)
+		where T : UObject =>
+		UObject.Instantiate(original, position, Quaternion.identity, parent);
 }

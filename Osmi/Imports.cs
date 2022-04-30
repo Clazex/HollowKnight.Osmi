@@ -20,3 +20,4 @@ global using Osmi.Utils;
 global using UnityEngine;
 
 global using Lang = Language.Language;
+global using UObject = UnityEngine.Object;
