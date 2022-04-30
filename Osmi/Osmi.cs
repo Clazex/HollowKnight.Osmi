@@ -5,8 +5,6 @@ public sealed class Osmi : Mod {
 
 	public static Osmi UnsafeInstance => Instance!;
 
-	public static bool Active => Instance != null;
-
 	public static Lazy<string> version = AssemblyUtil
 #if DEBUG
 		.GetMyDefaultVersionWithHash();
@@ -18,4 +16,6 @@ public sealed class Osmi : Mod {
 
 	public Osmi() =>
 		Instance = this;
+
+	public static bool IsHere() => true;
 }

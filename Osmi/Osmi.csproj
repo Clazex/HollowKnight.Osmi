@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<AssemblyTitle>Osmi</AssemblyTitle>
-		<Version>0.1.0</Version>
+		<Version>0.1.1</Version>
 		<Description>A Hollow Knight library mod</Description>
 		<Authors>Clazex</Authors>
 
@@ -51,6 +51,10 @@
 		</Reference>
 		<Reference Include="UnityEngine.ImageConversionModule">
 			<HintPath>$(HKRefs)/UnityEngine.ImageConversionModule.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="UnityEngine.Physics2DModule">
+			<HintPath>$(HKRefs)/UnityEngine.Physics2DModule.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
 		<Reference Include="Mono.Cecil">
