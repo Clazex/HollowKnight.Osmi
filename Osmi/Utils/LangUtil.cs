@@ -4,10 +4,10 @@ namespace Osmi.Utils;
 
 [PublicAPI]
 public static class LangUtil {
-	public static List<string> Langs { get; } = Lang
+	public static HashSet<string> Langs { get; } = Lang
 		.GetLanguages()
 		.Map(str => str.ToLower().Replace('_', '-'))
-		.ToList();
+		.ToHashSet();
 
 	public static string ToIdentifier(this LanguageCode code) =>
 		code.ToString().ToLower().Replace('_', '-');
