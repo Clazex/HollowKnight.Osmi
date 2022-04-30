@@ -2,6 +2,8 @@ namespace Osmi.Utils;
 
 [PublicAPI]
 public static class GameObjectUtil {
+	private static readonly GameObject holder = New("Osmi MonoBehaviour Holder", true);
+
 	public static void SetParent(this GameObject self, Transform parent) =>
 		self.transform.parent = parent;
 
@@ -74,4 +76,8 @@ public static class GameObjectUtil {
 	public static T Instantiate<T>(T original, Vector3 position, Transform parent)
 		where T : UObject =>
 		UObject.Instantiate(original, position, Quaternion.identity, parent);
+
+
+	public static T CreateHolder<T>(string name = "") where T : MonoBehaviour =>
+		New(string.IsNullOrWhiteSpace(name) ? typeof(T).Name + " Holder" : name, holder.transform).AddComponent<T>();
 }
