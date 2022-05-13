@@ -27,6 +27,12 @@ public static class GameObjectUtil {
 	}
 
 
+	public static TransformDelegate GetDelegate(this Transform self) => new(self);
+
+	public static TransformDelegate GetTransformDelegate(this GameObject self) =>
+		self.transform.GetDelegate();
+
+
 	public static GameObject New(bool dontDestroyOnLoad = false) {
 		GameObject go = new();
 
