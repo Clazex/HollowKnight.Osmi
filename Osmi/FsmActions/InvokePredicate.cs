@@ -12,6 +12,8 @@ public class InvokePredicate : FsmStateAction {
 	public InvokePredicate(Func<FsmStateAction, bool> predicate) =>
 		this.predicate = predicate.Bind(this);
 
-	public override void OnEnter() =>
+	public override void OnEnter() {
 		Fsm.Event(predicate?.Invoke() ?? false ? trueEvent : falseEvent);
+		Finish();
+	}
 }

@@ -9,6 +9,8 @@ public class CheckSceneName : FsmStateAction {
 	public CheckSceneName(string sceneName) =>
 		this.sceneName = sceneName;
 
-	public override void OnEnter() =>
+	public override void OnEnter() {
 		Fsm.Event(GameManager.instance?.sceneName == sceneName ? trueEvent : falseEvent);
+		Finish();
+	}
 }

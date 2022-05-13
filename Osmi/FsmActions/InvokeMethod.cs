@@ -10,6 +10,8 @@ public class InvokeMethod : FsmStateAction {
 	public InvokeMethod(Action<FsmStateAction> method) =>
 		this.method = method.Bind(this);
 
-	public override void OnEnter() =>
+	public override void OnEnter() {
 		method.Invoke();
+		Finish();
+	}
 }

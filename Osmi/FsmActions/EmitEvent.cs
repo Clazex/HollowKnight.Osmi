@@ -11,6 +11,8 @@ public class EmitEvent : FsmStateAction {
 		: this(FsmEvent.GetFsmEvent(eventName)) {
 	}
 
-	public override void OnEnter() =>
+	public override void OnEnter() {
 		Fsm.Event(@event);
+		Finish();
+	}
 }

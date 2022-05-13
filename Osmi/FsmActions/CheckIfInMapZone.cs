@@ -6,6 +6,8 @@ public class CheckIfInMapZone : FsmStateAction {
 	public FsmEvent? trueEvent;
 	public FsmEvent? falseEvent;
 
-	public override void OnEnter() =>
+	public override void OnEnter() {
 		Fsm.Event(GameManager.instance?.sm.mapZone == zone ? trueEvent : falseEvent);
+		Finish();
+	}
 }
