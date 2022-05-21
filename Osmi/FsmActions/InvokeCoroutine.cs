@@ -17,9 +17,9 @@ public class InvokeCoroutine : FsmStateAction {
 
 	public override void OnEnter() {
 		if (sync) {
-			Fsm.Owner.StartCoroutine(SyncCoroutine());
+			_ = Fsm.Owner.StartCoroutine(SyncCoroutine());
 		} else {
-			Fsm.Owner.StartCoroutine(coroutine.Invoke());
+			_ = Fsm.Owner.StartCoroutine(coroutine.Invoke());
 			Finish();
 		}
 	}

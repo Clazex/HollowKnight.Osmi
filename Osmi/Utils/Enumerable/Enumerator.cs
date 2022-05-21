@@ -3,7 +3,7 @@ namespace Osmi.Utils;
 public static partial class EnumerableUtil {
 	public static IEnumerator<T> Move<T>(this IEnumerator<T> self, int step = 1) {
 		while (step-- > 0) {
-			self.MoveNext();
+			_ = self.MoveNext();
 		}
 
 		return self;

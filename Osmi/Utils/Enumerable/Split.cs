@@ -18,7 +18,7 @@ public static partial class EnumerableUtil {
 		using IEnumerator<T> enumerator = self.Skip(start).GetEnumerator();
 
 		while (index++ < length) {
-			enumerator.MoveNext();
+			_ = enumerator.MoveNext();
 			yield return enumerator.Current;
 		}
 	}
@@ -51,11 +51,11 @@ public static partial class EnumerableUtil {
 		using IEnumerator<T> enumerator = self.GetEnumerator();
 
 		while (i++ < index) {
-			enumerator.MoveNext();
+			_ = enumerator.MoveNext();
 			former.Add(enumerator.Current);
 		}
 
-		enumerator.MoveNext();
+		_ = enumerator.MoveNext();
 		T value = enumerator.Current!;
 
 		return (former, value, enumerator.AsEnumerable());

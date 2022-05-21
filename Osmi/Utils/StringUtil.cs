@@ -42,12 +42,12 @@ public static class StringUtil {
 	public static string Join(this IEnumerable<string> self, string sep) {
 		using IEnumerator<string> enumerator = self.GetEnumerator();
 
-		enumerator.MoveNext();
+		_ = enumerator.MoveNext();
 		StringBuilder builder = new(enumerator.Current);
 
 		while (enumerator.MoveNext()) {
-			builder.Append(sep);
-			builder.Append(enumerator.Current);
+			_ = builder.Append(sep);
+			_ = builder.Append(enumerator.Current);
 		}
 
 		return builder.ToString();
@@ -59,11 +59,11 @@ public static class StringUtil {
 	public static string Join(this IEnumerable<string> self) {
 		using IEnumerator<string> enumerator = self.GetEnumerator();
 
-		enumerator.MoveNext();
+		_ = enumerator.MoveNext();
 		StringBuilder builder = new(enumerator.Current);
 
 		while (enumerator.MoveNext()) {
-			builder.Append(enumerator.Current);
+			_ = builder.Append(enumerator.Current);
 		}
 
 		return builder.ToString();

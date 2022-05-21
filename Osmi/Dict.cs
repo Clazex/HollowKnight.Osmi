@@ -27,7 +27,7 @@ public class Dict {
 	}
 
 	public string Localize(string key) {
-		dict.TryGetValue(LangUtil.CurrentLang, out Lazy<Dictionary<string, string>>? table);
+		_ = dict.TryGetValue(LangUtil.CurrentLang, out Lazy<Dictionary<string, string>>? table);
 		table ??= dict[LanguageCode.EN.ToIdentifier()];
 		return table.Value.TryGetValue(key, out string value) ? value : key;
 	}

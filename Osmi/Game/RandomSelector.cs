@@ -25,7 +25,7 @@ public class RandomSelector<T> {
 	public void AddItems(IEnumerable<SelectionItem> items) => items.ForEach(AddItem);
 
 	public void RemoveItem(SelectionItem item) {
-		items.Remove(item);
+		_ = items.Remove(item);
 		itemDataFresh = false;
 	}
 

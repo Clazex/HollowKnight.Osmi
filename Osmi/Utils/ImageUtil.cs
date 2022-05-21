@@ -6,7 +6,7 @@ namespace Osmi.Utils;
 public static class ImageUtil {
 	public static Texture2D ReadToTexture2D(this Stream self) {
 		var tex = new Texture2D(2, 2);
-		tex.LoadImage(self.ReadToBytes());
+		_ = tex.LoadImage(self.ReadToBytes());
 		return tex;
 	}
 
