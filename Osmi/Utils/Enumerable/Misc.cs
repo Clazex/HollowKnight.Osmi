@@ -14,4 +14,13 @@ public static partial class EnumerableUtil {
 
 	public static void ParallelForEach<T>(this IEnumerable<T> self, Action<T> f) =>
 		Parallel.ForEach(self, f);
+
+	public static bool TryAdd<K, V>(this IDictionary<K, V> self, K key, V val) {
+		if (self.ContainsKey(key)) {
+			return false;
+		}
+
+		self[key] = val;
+		return true;
+	}
 }
