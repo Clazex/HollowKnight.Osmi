@@ -15,16 +15,15 @@ public static class StreamUtil {
 	}
 
 	public static byte[] ReadToBytes(this Stream self) {
-		MemoryStream ms;
-		if (self is MemoryStream s) {
-			ms = s;
-		} else {
-			ms = new((int) self.Length);
+		if (self is not MemoryStream ms) {
+			ms = new();
 			self.CopyTo(ms);
 			self.Close();
 		}
 
-		byte[] content = ms.ToArray();
+		byte[] content = ms.TryGetBuffer(out ArraySegment<byte> buffer)
+			? buffer.Array
+			: ms.ToArray();
 		ms.Close();
 
 		return content;
