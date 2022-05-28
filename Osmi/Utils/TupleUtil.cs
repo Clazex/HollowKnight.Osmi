@@ -20,4 +20,11 @@ public static class TupleUtil {
 
 	public static void Desconstruct(this Vector2 self, out float x, out float y) =>
 		(x, y) = self.ToTuple();
+
+
+	public static Vector2 AsVector2(this Vector3 self) => new(self.x, self.y);
+
+	public static Vector2 GetUnitVector(this Vector2 self) => self / self.magnitude;
+
+	public static Vector3 GetUnitVector(this Vector3 self) => self / self.magnitude;
 }
