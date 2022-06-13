@@ -17,5 +17,8 @@ public sealed class Osmi : Mod {
 	public Osmi() =>
 		Instance = this;
 
+	public override void Initialize() =>
+		_ = Ref.GM.StartCoroutine(OsmiHooks.CheckGameInitialized());
+
 	public static bool IsHere() => true;
 }

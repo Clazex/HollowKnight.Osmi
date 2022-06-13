@@ -20,5 +20,6 @@ global using Osmi.Utils;
 global using UnityEngine;
 
 global using Lang = Language.Language;
+global using ReflectionHelper = Modding.ReflectionHelper;
 global using Logger = Osmi.Utils.Logger;
 global using UObject = UnityEngine.Object;
