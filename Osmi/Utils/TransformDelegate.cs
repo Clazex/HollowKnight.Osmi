@@ -4,6 +4,11 @@ namespace Osmi.Utils;
 public sealed class TransformDelegate {
 	public Transform Raw { get; private init; }
 
+	public Vector2 Position2D {
+		get => Raw.position.AsVector2();
+		set => Raw.position = value.ToVector3(Raw.position.z);
+	}
+
 	public float X {
 		get => Raw.position.x;
 		set => Raw.position = Raw.position with { x = value };
@@ -17,6 +22,33 @@ public sealed class TransformDelegate {
 	public float Z {
 		get => Raw.position.z;
 		set => Raw.position = Raw.position with { z = value };
+	}
+
+
+	public Vector2 LocalPosition2D {
+		get => Raw.localPosition.AsVector2();
+		set => Raw.localPosition = value.ToVector3(Raw.localPosition.z);
+	}
+
+	public float LocalX {
+		get => Raw.localPosition.x;
+		set => Raw.localPosition = Raw.localPosition with { x = value };
+	}
+
+	public float LocalY {
+		get => Raw.localPosition.y;
+		set => Raw.localPosition = Raw.localPosition with { y = value };
+	}
+
+	public float LocalZ {
+		get => Raw.localPosition.z;
+		set => Raw.localPosition = Raw.localPosition with { z = value };
+	}
+
+
+	public Vector2 Scale2D {
+		get => Raw.localScale.AsVector2();
+		set => Raw.localScale = value.ToVector3(Raw.localScale.z);
 	}
 
 	public float ScaleX {
@@ -34,10 +66,12 @@ public sealed class TransformDelegate {
 		set => Raw.localScale = Raw.localScale with { z = value };
 	}
 
+
 	public float Rotation2D {
 		get => Raw.localEulerAngles.z;
 		set => Raw.localEulerAngles = Raw.localEulerAngles with { z = value };
 	}
+
 
 	public TransformDelegate(Transform tf) => Raw = tf;
 }
