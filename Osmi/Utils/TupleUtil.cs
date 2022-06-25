@@ -24,6 +24,8 @@ public static class TupleUtil {
 
 	public static Vector2 AsVector2(this Vector3 self) => new(self.x, self.y);
 
+	public static Vector3 ToVector3(this Vector2 self, float z) => new(self.x, self.y, z);
+
 	public static Vector2 GetUnitVector(this Vector2 self) => self / self.magnitude;
 
 	public static Vector3 GetUnitVector(this Vector3 self) => self / self.magnitude;
