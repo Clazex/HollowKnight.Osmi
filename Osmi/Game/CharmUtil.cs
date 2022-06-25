@@ -19,15 +19,15 @@ public static class CharmUtil {
 		Ref.PD.GetInt($"charmCost_{charm}");
 
 	public static bool EquipCharm(int charm) {
-		if (EquippedCharm(charm) || Ref.PD.charmSlotsFilled >= Ref.PD.charmSlots) {
+		if (EquippedCharm(charm) || Ref.PD.GetInt("charmSlotsFilled") >= Ref.PD.GetInt("charmSlots")) {
 			return false;
 		}
 
-		Ref.PD.charmSlotsFilled += GetCharmCost(charm);
+		Ref.PD.SetInt("charmSlotsFilled", Ref.PD.GetInt("charmSlotsFilled") + GetCharmCost(charm)) ;
 
-		if (Ref.PD.charmSlotsFilled > Ref.PD.charmSlots) {
-			Ref.PD.canOvercharm = true;
-			Ref.PD.overcharmed = true;
+		if (Ref.PD.GetInt("charmSlotsFilled") > Ref.PD.GetInt("charmSlots")) {
+			Ref.PD.SetBool("canOvercharm", true);
+			Ref.PD.SetBool("overcharmed", true);
 		}
 
 		UpdateCharm();
@@ -40,10 +40,10 @@ public static class CharmUtil {
 			return false;
 		}
 
-		Ref.PD.charmSlotsFilled -= GetCharmCost(charm);
+		Ref.PD.SetInt("charmSlotsFilled", Ref.PD.GetInt("charmSlotsFilled") - GetCharmCost(charm));
 
-		if (Ref.PD.overcharmed && Ref.PD.charmSlotsFilled <= Ref.PD.charmSlots) {
-			Ref.PD.overcharmed = false;
+		if (Ref.PD.GetBool("overcharmed") && Ref.PD.GetInt("charmSlotsFilled") <= Ref.PD.GetInt("charmSlots")) {
+			Ref.PD.SetBool("overcharmed", false);
 		}
 
 		Ref.PD.SetBool($"equippedCharm_{charm}", false);
