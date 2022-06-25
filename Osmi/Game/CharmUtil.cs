@@ -54,6 +54,9 @@ public static class CharmUtil {
 		return true;
 	}
 
+	public static void UnequipAllCharms() =>
+		Ref.PD.GetVariable<List<int>>("equippedCharms").ToArray().ForEach(i => UnequipCharm(i));
+
 
 	public static bool GotCharm(Charm charm) => GotCharm((int) charm);
 
