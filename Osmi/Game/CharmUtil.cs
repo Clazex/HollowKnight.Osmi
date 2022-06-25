@@ -30,6 +30,9 @@ public static class CharmUtil {
 			Ref.PD.SetBool("overcharmed", true);
 		}
 
+		Ref.PD.SetBool($"equippedCharm_{charm}", true);
+		Ref.PD.EquipCharm(charm);
+
 		UpdateCharm();
 
 		return true;
