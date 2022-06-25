@@ -44,7 +44,7 @@ public static class GameObjectUtil {
 	}
 
 	public static GameObject New(string name, bool dontDestroyOnLoad = false) =>
-		New(name, null!, dontDestroyOnLoad);
+		New(name, (null as Transform)!, dontDestroyOnLoad);
 
 	public static GameObject New(string name, Transform parent, bool dontDestroyOnLoad = false) {
 		GameObject go = new(name);
@@ -57,11 +57,17 @@ public static class GameObjectUtil {
 		return go;
 	}
 
+	public static GameObject New(string name, GameObject parent, bool dontDestroyOnLoad = false) =>
+		New(name, parent.transform, dontDestroyOnLoad);
+
 	public static GameObject New(string name, Transform parent, params Type[] components) {
 		GameObject go = new(name, components);
 		go.SetParent(parent);
 		return go;
 	}
+
+	public static GameObject New(string name, GameObject parent, params Type[] components) =>
+		New(name, parent.transform, components);
 
 	public static GameObject New(string name, Transform parent, bool dontDestroyOnLoad, params Type[] components) {
 		GameObject go = new(name, components);
@@ -74,6 +80,9 @@ public static class GameObjectUtil {
 		return go;
 	}
 
+	public static GameObject New(string name, GameObject parent, bool dontDestroyOnLoad, params Type[] components) =>
+		New(name, parent.transform, dontDestroyOnLoad, components);
+
 
 	public static T Instantiate<T>(T original, Vector3 position)
 		where T : UObject =>
@@ -82,6 +91,10 @@ public static class GameObjectUtil {
 	public static T Instantiate<T>(T original, Vector3 position, Transform parent)
 		where T : UObject =>
 		UObject.Instantiate(original, position, Quaternion.identity, parent);
+
+	public static T Instantiate<T>(T original, Vector3 position, GameObject parent)
+		where T : UObject =>
+		UObject.Instantiate(original, position, Quaternion.identity, parent.transform);
 
 
 	public static T CreateHolder<T>(string name = "") where T : MonoBehaviour =>
