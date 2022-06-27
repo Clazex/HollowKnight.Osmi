@@ -5,13 +5,6 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Osmi", "Osmi\Osmi.csproj", "{4FE70251-BB17-4C1B-B537-B5599BD77BE7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BBEAA9D3-3B2A-4E24-9152-FFB9DC3C596F}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-		.gitignore = .gitignore
-		README.md = README.md
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
