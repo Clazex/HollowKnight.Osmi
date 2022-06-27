@@ -16,6 +16,10 @@ public sealed class InSceneCoroutineExecutor : MonoBehaviour {
 	public static void StopAll() =>
 		instance.StopAllCoroutines();
 
+	public static Coroutine SetTimeOut(float timeOut, Action action) => instance.SetTimeOut(timeOut, action);
+
+	public static Coroutine SetImmediate(Action action) => instance.SetImmediate(action);
+
 	static InSceneCoroutineExecutor() =>
 		OsmiHooks.SceneChangeHook += (_, _) => StopAll();
 }
