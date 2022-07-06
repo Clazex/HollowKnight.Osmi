@@ -1,3 +1,6 @@
+using Osmi.Exports;
+using Osmi.Game;
+
 namespace Osmi;
 
 public sealed class Osmi : Mod {
@@ -17,8 +20,11 @@ public sealed class Osmi : Mod {
 	public Osmi() =>
 		Instance = this;
 
-	public override void Initialize() =>
+	public override void Initialize() {
 		_ = Ref.GM.StartCoroutine(OsmiHooks.CheckGameInitialized());
+
+		ModInteropExports.Init();
+	}
 
 	public static bool IsHere() => true;
 }
