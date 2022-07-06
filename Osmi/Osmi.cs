@@ -21,7 +21,7 @@ public sealed class Osmi : Mod {
 		Instance = this;
 
 	public override void Initialize() {
-		_ = Ref.GM.StartCoroutine(OsmiHooks.CheckGameInitialized());
+		_ = GlobalCoroutineExecutor.Start(OsmiHooks.CheckGameInitialized());
 
 		ModInteropExports.Init();
 	}
