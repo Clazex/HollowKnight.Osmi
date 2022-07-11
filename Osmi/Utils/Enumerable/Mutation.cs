@@ -33,4 +33,39 @@ public static partial class EnumerableUtil {
 
 	public static IEnumerable<T> OrderDescending<T, U>(this IEnumerable<T> self) =>
 		self.OrderByDescending(Funcs.Identity);
+
+
+	/// <inheritdoc cref="Shuffle{T}(IEnumerable{T}, System.Random)"/>
+	/// <remarks>Uses <see cref="UnityEngine.Random.Range(int, int)"/> to create random seed</remarks>
+	public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> self) =>
+		self.Shuffle(new(UnityEngine.Random.Range(int.MinValue, int.MaxValue)));
+
+	/// <summary>
+	/// <para>
+	/// Uses Durstenfeld version of
+	/// <seealso href="https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm">Fisher–Yates shuffle</seealso>,
+	/// or Knuth shuffle, to shuffle the enumerable
+	/// </para>
+	/// <para>
+	/// The following snippet is a naive implementation of shuffle algorithm:
+	/// <code>
+	/// System.Random random = new();
+	/// enumerable.OrderBy(i => random.Next());
+	/// </code>
+	/// It is simple, yet not performant, and is biased. So always prefer this implementation over that one.
+	/// </para>
+	/// <para>
+	/// Further reading: <seealso href="https://blog.codinghorror.com/the-danger-of-naivete/">The Danger of Naïveté</seealso>
+	/// </para>
+	/// </summary>
+	/// <param name="random">Random number generator</param>
+	public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> self, System.Random random) {
+		T[] array = self.ToArray();
+		int count = array.Length;
+		for (int i = 0; i < count; i++) {
+			int j = random.Next(i, count);
+			yield return array[j];
+			array[j] = array[i];
+		}
+	}
 }
