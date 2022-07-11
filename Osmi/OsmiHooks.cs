@@ -70,6 +70,36 @@ public static class OsmiHooks {
 
 
 	/// <summary>
+	/// Called after entering a new or existing save,
+	/// ensures to be after <see cref="On.HeroController.Start"/>
+	/// </summary>
+	public static event Action AfterEnterSaveHook = null!;
+
+	private static void OnAfterEnterSave() {
+		Ref.GM.OnFinishedEnteringScene -= OnAfterEnterSave;
+		Logger.LogFine($"{nameof(OnAfterEnterSave)} Invoked");
+
+		if (AfterEnterSaveHook == null) {
+			return;
+		}
+
+		foreach (Action a in AfterEnterSaveHook.GetInvocationList()) {
+			try {
+				a.Invoke();
+			} catch (Exception e) {
+				Logger.LogError(e.ToString());
+			}
+		}
+	}
+
+	private static void HookOnAfterEnterSave(On.HeroController.orig_Start orig, HeroController self) {
+		orig(self);
+		Ref.GM.OnFinishedEnteringScene -= OnAfterEnterSave;
+		Ref.GM.OnFinishedEnteringScene += OnAfterEnterSave;
+	}
+
+
+	/// <summary>
 	///	Equivalent to
 	///	<see cref="UnityEngine.SceneManagement.SceneManager.activeSceneChanged"/>,
 	///	but catch all exceptions
@@ -168,6 +198,8 @@ public static class OsmiHooks {
 
 	static OsmiHooks() {
 		GameInitializedHook += () => UIManager.EditMenus += OnMenuBuild;
+
+		On.HeroController.Start += HookOnAfterEnterSave;
 
 		USceneManager.activeSceneChanged += OnSceneChange;
 
