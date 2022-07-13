@@ -2,7 +2,10 @@ namespace Osmi.FsmActions;
 
 [PublicAPI]
 public class EmitEvent : FsmStateAction {
-	public FsmEvent @event;
+	public FsmEvent? @event;
+
+	public EmitEvent() {
+	}
 
 	public EmitEvent(FsmEvent @event) =>
 		this.@event = @event;

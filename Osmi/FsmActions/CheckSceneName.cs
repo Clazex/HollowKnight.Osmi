@@ -6,6 +6,9 @@ public class CheckSceneName : FsmStateAction {
 	public FsmEvent? trueEvent;
 	public FsmEvent? falseEvent;
 
+	public CheckSceneName() {
+	}
+
 	public CheckSceneName(string sceneName) =>
 		this.sceneName = sceneName;
 

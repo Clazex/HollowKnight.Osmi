@@ -2,8 +2,11 @@ namespace Osmi.FsmActions;
 
 [PublicAPI]
 public class InvokeCoroutine : FsmStateAction {
-	public Func<IEnumerator> coroutine;
+	public Func<IEnumerator>? coroutine;
 	public bool sync;
+
+	public InvokeCoroutine() {
+	}
 
 	public InvokeCoroutine(Func<IEnumerator> coroutine, bool sync = false) {
 		this.coroutine = coroutine;
@@ -16,11 +19,13 @@ public class InvokeCoroutine : FsmStateAction {
 	}
 
 	public override void OnEnter() {
-		if (sync) {
-			_ = Fsm.Owner.StartCoroutine(SyncCoroutine());
-		} else {
-			_ = Fsm.Owner.StartCoroutine(coroutine.Invoke());
-			Finish();
+		if (coroutine != null) {
+			if (sync) {
+				_ = Fsm.Owner.StartCoroutine(SyncCoroutine());
+			} else {
+				_ = Fsm.Owner.StartCoroutine(coroutine.Invoke());
+				Finish();
+			}
 		}
 	}
 

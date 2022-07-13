@@ -2,7 +2,10 @@ namespace Osmi.FsmActions;
 
 [PublicAPI]
 public class InvokeMethod : FsmStateAction {
-	public Action method;
+	public Action? method;
+
+	public InvokeMethod() {
+	}
 
 	public InvokeMethod(Action method) =>
 		this.method = method;
@@ -11,7 +14,7 @@ public class InvokeMethod : FsmStateAction {
 		this.method = method.Bind(this);
 
 	public override void OnEnter() {
-		method.Invoke();
+		method?.Invoke();
 		Finish();
 	}
 }
