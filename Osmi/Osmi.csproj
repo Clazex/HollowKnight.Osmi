@@ -21,6 +21,8 @@
 		<Deterministic>True</Deterministic>
 		<CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
 		<Nullable>enable</Nullable>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<NoWarn>CS1591</NoWarn>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)'))=./</PathMap>
 	</PropertyGroup>
@@ -106,14 +108,14 @@
 	</ItemGroup>
 
 	<Target Name="CopyMod" AfterTargets="PostBuildEvent">
-		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb" DestinationFolder="$(HKModOutputPath)/$(TargetName)" SkipUnchangedFiles="true" />
+		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb;$(TargetDir)$(TargetName).xml" DestinationFolder="$(HKModOutputPath)/$(TargetName)" SkipUnchangedFiles="true" />
 	</Target>
 
 	<Target Name="CreateReleaseZip" AfterTargets="PostBuildEvent" Condition="$(Configuration) == 'Release'">
 		<RemoveDir Directories="$(ProjectRoot)/dist" />
 		<MakeDir Directories="$(ProjectRoot)/dist/tmp" />
 
-		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb;$(ProjectRoot)/README.md;$(ProjectRoot)/LICENSE" DestinationFolder="$(ProjectRoot)/dist/tmp" />
+		<Copy SourceFiles="$(TargetPath);$(TargetDir)$(TargetName).pdb;$(TargetDir)$(TargetName).xml;$(ProjectRoot)/README.md;$(ProjectRoot)/LICENSE" DestinationFolder="$(ProjectRoot)/dist/tmp" />
 		<ZipDirectory SourceDirectory="$(ProjectRoot)/dist/tmp" DestinationFile="$(ProjectRoot)/dist/$(TargetName)-v$(Version).zip" />
 
 		<RemoveDir Directories="$(ProjectRoot)/dist/tmp" />
