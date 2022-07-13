@@ -4,8 +4,6 @@ using MonoMod.Cil;
 using MonoMod.RuntimeDetour;
 using MonoMod.Utils;
 
-using UnityEngine.SceneManagement;
-
 namespace Osmi;
 
 [PublicAPI]
@@ -171,7 +169,7 @@ public static class OsmiHooks {
 	static OsmiHooks() {
 		GameInitializedHook += () => UIManager.EditMenus += OnMenuBuild;
 
-		UnityEngine.SceneManagement.SceneManager.activeSceneChanged += OnSceneChange;
+		USceneManager.activeSceneChanged += OnSceneChange;
 
 		IL.HealthManager.Hit += il => new ILCursor(il)
 			.Goto(0)

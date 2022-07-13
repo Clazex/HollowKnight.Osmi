@@ -1,5 +1,3 @@
-using System.IO;
-
 namespace Osmi.Utils;
 
 [PublicAPI]
@@ -23,7 +21,7 @@ public static class ImageUtil {
 		RenderTexture prevTex = RenderTexture.active;
 		RenderTexture.active = renderTex;
 
-		var newTex = new Texture2D(self.width, self.height);
+		Texture2D newTex = new(self.width, self.height);
 		newTex.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
 		newTex.Apply();
 
