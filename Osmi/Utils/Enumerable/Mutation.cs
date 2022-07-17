@@ -58,6 +58,7 @@ public static partial class EnumerableUtil {
 	/// Further reading: <seealso href="https://blog.codinghorror.com/the-danger-of-naivete/">The Danger of Naïveté</seealso>
 	/// </para>
 	/// </summary>
+	/// <param name="self" />
 	/// <param name="random">Random number generator</param>
 	public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> self, System.Random random) {
 		T[] array = self.ToArray();

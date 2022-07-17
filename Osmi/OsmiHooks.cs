@@ -9,7 +9,7 @@ namespace Osmi;
 [PublicAPI]
 public static class OsmiHooks {
 	/// <summary>
-	/// Called when entering main menu for the first time <br />
+	/// Called when entering main menu for the first time.
 	/// Hooking new methods after that will result in immediate invocation
 	/// </summary>
 	public static event Action GameInitializedHook {
@@ -123,6 +123,8 @@ public static class OsmiHooks {
 	}
 
 
+	/// <param name="hm">Health manager that receives the hit</param>
+	/// <param name="hit">Hit instance</param>
 	/// <param name="invincible">Invincibility state passed by vanilla code or last hooked method</param>
 	/// <returns>New invincibility state</returns>
 	public delegate bool HitEnemyHandler(HealthManager hm, HitInstance hit, bool invincible);

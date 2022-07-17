@@ -30,7 +30,7 @@ public class InvokeCoroutine : FsmStateAction {
 	}
 
 	private IEnumerator SyncCoroutine() {
-		yield return coroutine.Invoke();
+		yield return coroutine?.Invoke();
 		Finish();
 	}
 }
