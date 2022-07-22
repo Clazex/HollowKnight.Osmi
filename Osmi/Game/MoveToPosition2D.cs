@@ -1,5 +1,7 @@
 namespace Osmi.Game;
 
+#pragma warning disable IDE0051
+
 [PublicAPI]
 [RequireComponent(typeof(Rigidbody2D))]
 public class MoveToPosition2D : MonoBehaviour {
@@ -10,14 +12,20 @@ public class MoveToPosition2D : MonoBehaviour {
 	public float accelerationForce = 0;
 	public float maxVelocity = 0;
 
+
 	private void Start() => rb = GetComponent<Rigidbody2D>();
 
 	private void FixedUpdate() {
-		if (TargetPos == null || rb.bodyType != RigidbodyType2D.Dynamic) {
+		if (!TargetPos.HasValue || rb.bodyType != RigidbodyType2D.Dynamic) {
 			return;
 		}
 
-		rb.AddForce((TargetPos.Value - transform.position.AsVector2()).GetUnitVector() * accelerationForce);
+		Vector2 relPos = TargetPos.Value - transform.position.AsVector2();
+		if (relPos.magnitude == 0) {
+			return;
+		}
+
+		rb.AddForce(relPos.GetUnitVector() * accelerationForce);
 		rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxVelocity);
 	}
 }
