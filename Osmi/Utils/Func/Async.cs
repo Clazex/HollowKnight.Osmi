@@ -7,8 +7,8 @@ public static partial class FuncUtil {
 	public static Coroutine SetImmediate(this MonoBehaviour self, Action action) =>
 		self.SetTimeOut(0, action);
 
-	private static IEnumerator TimeOutCoroutine(this Action self, float timeOut) {
+	private static IEnumerator TimeOutCoroutine(Action action, float timeOut) {
 		yield return new WaitForSeconds(timeOut);
-		self();
+		action.Invoke();
 	}
 }
